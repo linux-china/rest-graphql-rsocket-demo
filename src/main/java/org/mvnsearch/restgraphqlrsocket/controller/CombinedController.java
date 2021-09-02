@@ -40,7 +40,7 @@ public class CombinedController {
 
     @SchemaMapping(typeName = "Book", field = "author")
     public Mono<Author> authorForBook(Book book) {
-        return Mono.justOrEmpty(AUTHORS.get(book.getAuthorId()));
+        return findAuthor(book.getAuthorId());
     }
 
 
