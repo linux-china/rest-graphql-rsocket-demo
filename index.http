@@ -1,0 +1,11 @@
+### get book
+GET http://localhost:8080/book/book-1
+
+### get author
+GET http://localhost:8080/author/author-1
+
+### graphql query
+POST http://localhost:8080/graphql
+Content-Type: application/json
+
+< ./graphql-query.json
