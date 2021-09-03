@@ -1,5 +1,5 @@
-REST-GraphQL-RSocket demo
-=========================
+REST-GraphQL-RSocket combo demo
+===============================
 
 One Controller to combine HTTP REST, GraphQL and RSocket.
 
