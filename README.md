@@ -30,9 +30,31 @@ public class CombinedController {
 # Features
 
 * HTTP REST
+
+```http request
+GET http://localhost:8080/book/book-1
+```
+
 * GraphQL
+
+```http request
+POST http://localhost:8080/graphql
+Content-Type: application/json
+
+< ./graphql-query.json
+```
+
 * RSocket
+
+```bash
+rsc --request --route=findBook --data=book-1 ws://localhost:8080/rsocket
+```
+
 * GraphQL over RSocket
+
+```bash
+cat graphql-query.json | rsc --request --route=graphql --data=- ws://localhost:8080/rsocket
+```
 
 # References
 
