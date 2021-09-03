@@ -1,0 +1,3 @@
+{
+  "query": "{ findBook(id: \"book-1\") { id name } }"
+}
