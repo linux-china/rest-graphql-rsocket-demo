@@ -1,7 +1,11 @@
 package org.mvnsearch.restgraphqlrsocket.controller;
 
+import graphql.ExecutionResult;
 import org.mvnsearch.restgraphqlrsocket.domain.model.Author;
 import org.mvnsearch.restgraphqlrsocket.domain.model.Book;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.graphql.GraphQlService;
+import org.springframework.graphql.RequestInput;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.graphql.data.method.annotation.SchemaMapping;
@@ -38,12 +42,23 @@ public class CombinedController {
         return Mono.justOrEmpty(AUTHORS.get(id));
     }
 
+    @MessageMapping("graphql")
+    public Mono<Map<String, Object>> graphql(Map<String, Object> input) {
+        final RequestInput requestInput = new RequestInput((String) input.get("query"),
+                (String) input.get("operationName"),
+                (Map<String, Object>) input.get("variables"));
+        return graphQlService.execute(requestInput)
+                .map(ExecutionResult::toSpecification);
+    }
+
     @SchemaMapping(typeName = "Book", field = "author")
     public Mono<Author> authorForBook(Book book) {
         return findAuthor(book.getAuthorId());
     }
 
 
+    @Autowired
+    private GraphQlService graphQlService;
     public static Map<String, Book> BOOKS = Stream.of(
             new Book("book-1", "Harry Potter and the Philosopher's Stone", 223, "author-1"),
             new Book("book-2", "Moby Dick", 221, "author-2"),
