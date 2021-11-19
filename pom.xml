@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.5.4</version>
+        <version>2.5.7</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -17,7 +17,7 @@
 
     <properties>
         <java.version>17</java.version>
-        <graphql-java.version>17.2</graphql-java.version>
+        <graphql-java.version>17.3</graphql-java.version>
         <spring-graphql.version>1.0.0-M2</spring-graphql.version>
     </properties>
 
@@ -35,7 +35,7 @@
         <dependency>
             <groupId>com.graphql-java</groupId>
             <artifactId>graphql-java</artifactId>
-            <version>17.2</version>
+            <version>${graphql-java.version}</version>
         </dependency>
         <dependency>
             <groupId>com.graphql-java</groupId>
@@ -78,7 +78,6 @@
                     <source>17</source>
                     <target>17</target>
                     <parameters>true</parameters>
-                    <release>17</release>
                     <compilerArgs>
                         <compilerArg>--enable-preview</compilerArg>
                     </compilerArgs>
