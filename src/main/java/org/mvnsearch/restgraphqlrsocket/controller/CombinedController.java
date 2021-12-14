@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import reactor.core.publisher.Mono;
 
+import java.util.Locale;
 import java.util.Map;
+import java.util.UUID;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -44,10 +46,7 @@ public class CombinedController {
 
     @MessageMapping("graphql")
     public Mono<Map<String, Object>> graphql(Map<String, Object> input) {
-        final RequestInput requestInput = new RequestInput((String) input.get("query"),
-                (String) input.get("operationName"),
-                (Map<String, Object>) input.get("variables"));
-        return graphQlService.execute(requestInput)
+        return graphQlService.execute(convertToRequestInput(input))
                 .map(ExecutionResult::toSpecification);
     }
 
@@ -72,4 +71,11 @@ public class CombinedController {
     ).collect(Collectors.toMap(Author::getId, Function.identity()));
 
 
+    private RequestInput convertToRequestInput(Map<String, Object> request) {
+        String query = (String) request.get("query");
+        String operationName = (String) request.get("operationName");
+        @SuppressWarnings("unchecked")
+        Map<String, Object> variables = (Map<String, Object>) request.get("variables");
+        return new RequestInput(query, operationName, variables, Locale.getDefault(), UUID.randomUUID().toString());
+    }
 }
