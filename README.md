@@ -70,6 +70,7 @@ Content-Type: application/json
 
 # References
 
-* Spring GraphQL: https://docs.spring.io/spring-boot/docs/2.7.0-M1/reference/html/web.html#web.graphql
+* Spring GraphQL: https://spring.io/projects/spring-graphql
+* Spring Boot GraphQL: https://docs.spring.io/spring-boot/docs/2.7.0-M1/reference/html/web.html#web.graphql
 * RSocket: https://rsocket.io/
 * RSocket Requests In HTTP Client: https://plugins.jetbrains.com/plugin/18195-rsocket-requests-in-http-client
