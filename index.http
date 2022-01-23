@@ -4,6 +4,13 @@ GET http://localhost:8080/book/book-1
 ### get author
 GET http://localhost:8080/author/author-1
 
+### RSocket request
+RSOCKET findBook
+Host: ws://localhost:8080/rsocket
+Content-Type: application/json
+
+"book-1"
+
 ### graphql query
 POST http://localhost:8080/graphql
 Content-Type: application/json
