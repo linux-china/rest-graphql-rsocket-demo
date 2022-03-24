@@ -1,14 +1,14 @@
 package org.mvnsearch.restgraphqlrsocket.controller;
 
-import graphql.ExecutionResult;
 import org.mvnsearch.restgraphqlrsocket.domain.model.Author;
 import org.mvnsearch.restgraphqlrsocket.domain.model.Book;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.graphql.GraphQlService;
-import org.springframework.graphql.RequestInput;
+import org.springframework.graphql.ExecutionGraphQlRequest;
+import org.springframework.graphql.ExecutionGraphQlService;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.graphql.data.method.annotation.SchemaMapping;
+import org.springframework.graphql.support.DefaultExecutionGraphQlRequest;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -39,7 +39,8 @@ public class CombinedController {
         return Mono.justOrEmpty(BOOKS.get(id));
     }
 
-    @RestGraphqlRSocket(path = "/author/{id}", query = "findAuthor", route = "findAuthor")
+    @RestGraphqlRSocket(path = "/author/{id}", route = "findAuthor")
+    @QueryMapping("findAuthor")
     public Mono<Author> findAuthor(@PathVariable("id") @Argument String id) {
         return Mono.justOrEmpty(AUTHORS.get(id));
     }
@@ -47,7 +48,7 @@ public class CombinedController {
     @MessageMapping("graphql")
     public Mono<Map<String, Object>> graphql(Map<String, Object> input) {
         return graphQlService.execute(convertToRequestInput(input))
-                .map(ExecutionResult::toSpecification);
+                .map(graphQlResponse -> graphQlResponse.getExecutionResult().toSpecification());
     }
 
     @SchemaMapping(typeName = "Book", field = "author")
@@ -57,7 +58,7 @@ public class CombinedController {
 
 
     @Autowired
-    private GraphQlService graphQlService;
+    private ExecutionGraphQlService graphQlService;
     public static Map<String, Book> BOOKS = Stream.of(
             new Book("book-1", "Harry Potter and the Philosopher's Stone", 223, "author-1"),
             new Book("book-2", "Moby Dick", 221, "author-2"),
@@ -71,11 +72,11 @@ public class CombinedController {
     ).collect(Collectors.toMap(Author::getId, Function.identity()));
 
 
-    private RequestInput convertToRequestInput(Map<String, Object> request) {
+    private ExecutionGraphQlRequest convertToRequestInput(Map<String, Object> request) {
         String query = (String) request.get("query");
         String operationName = (String) request.get("operationName");
         @SuppressWarnings("unchecked")
         Map<String, Object> variables = (Map<String, Object>) request.get("variables");
-        return new RequestInput(query, operationName, variables, Locale.getDefault(), UUID.randomUUID().toString());
+        return new DefaultExecutionGraphQlRequest(query, operationName, variables, UUID.randomUUID().toString(), Locale.getDefault());
     }
 }
