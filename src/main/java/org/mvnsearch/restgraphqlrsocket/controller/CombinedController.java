@@ -39,7 +39,7 @@ public class CombinedController {
         return Mono.justOrEmpty(BOOKS.get(id));
     }
 
-    @RestGraphqlRSocket(path = "/author/{id}", route = "findAuthor")
+    @RestRSocket(path = "/author/{id}", route = "findAuthor")
     @QueryMapping("findAuthor")
     public Mono<Author> findAuthor(@PathVariable("id") @Argument String id) {
         return Mono.justOrEmpty(AUTHORS.get(id));
