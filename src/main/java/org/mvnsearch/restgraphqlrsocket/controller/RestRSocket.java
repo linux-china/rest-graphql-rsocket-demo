@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.lang.annotation.*;
 
 /**
- * Combined annotation for REST, GraphQL and RSocket
+ * Combined annotation for REST and RSocket
  *
  * @author linux_china
  */
@@ -18,9 +18,8 @@ import java.lang.annotation.*;
 @Documented
 @RequestMapping
 @MessageMapping
-@QueryMapping
 @ResponseBody
-public @interface RestGraphqlRSocket {
+public @interface RestRSocket {
     @AliasFor(annotation = RequestMapping.class, value = "value")
     String path() default "";
 
