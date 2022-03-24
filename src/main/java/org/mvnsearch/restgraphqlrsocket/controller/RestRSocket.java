@@ -1,7 +1,6 @@
 package org.mvnsearch.restgraphqlrsocket.controller;
 
 import org.springframework.core.annotation.AliasFor;
-import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -22,9 +21,6 @@ import java.lang.annotation.*;
 public @interface RestRSocket {
     @AliasFor(annotation = RequestMapping.class, value = "value")
     String path() default "";
-
-    @AliasFor(annotation = QueryMapping.class, value = "value")
-    String query() default "";
 
     @AliasFor(annotation = MessageMapping.class, value = "value")
     String route() default "";
