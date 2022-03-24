@@ -5,10 +5,12 @@ GET http://localhost:8080/book/book-1
 GET http://localhost:8080/author/author-1
 
 ### graphql query
-POST http://localhost:8080/graphql
-Content-Type: application/json
+GRAPHQL http://localhost:8080/graphql
+Content-Type: application/graphql
 
-< ./graphql-query.json
+query {
+    findBook(id: "book-1") { id name }
+}
 
 ### RSocket request
 RSOCKET findBook
