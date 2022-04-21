@@ -62,6 +62,7 @@ query {
 # References
 
 * Spring GraphQL: https://spring.io/projects/spring-graphql
-* Spring Boot GraphQL: https://docs.spring.io/spring-boot/docs/2.7.0-M1/reference/html/web.html#web.graphql
+* Spring Boot GraphQL: https://docs.spring.io/spring-graphql/docs/1.0.0-RC1/reference/html/
 * RSocket: https://rsocket.io/
-* RSocket Requests In HTTP Client: https://plugins.jetbrains.com/plugin/18195-rsocket-requests-in-http-client
+* RSocket JetBrains Plugin: https://plugins.jetbrains.com/plugin/18195-rsocket-requests-in-http-client
+* httpx JetBrains Plugin: https://plugins.jetbrains.com/plugin/18807-httpx-requests
