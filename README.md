@@ -1,7 +1,7 @@
 REST-GraphQL-RSocket combo demo
 ===============================
 
-Demo for HTTP REST, GraphQL and RSocket
+Spring Boot app with HTTP REST API, GraphQL and RSocket.
 
 # Features
 
