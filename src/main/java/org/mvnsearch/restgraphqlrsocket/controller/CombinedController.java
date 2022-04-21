@@ -7,6 +7,7 @@ import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.graphql.data.method.annotation.SchemaMapping;
 import org.springframework.graphql.support.DefaultExecutionGraphQlRequest;
+import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,12 +30,14 @@ public class CombinedController {
 
     @RequestMapping("/book/{id}")
     @QueryMapping("findBook")
+    @MessageMapping("findBook")
     public Mono<Book> findBook(@PathVariable("id") @Argument String id) {
         return Mono.justOrEmpty(BOOKS.get(id));
     }
 
     @RequestMapping(path = "/author/{id}")
     @QueryMapping("findAuthor")
+    @MessageMapping("findAuthor")
     public Mono<Author> findAuthor(@PathVariable("id") @Argument String id) {
         return Mono.justOrEmpty(AUTHORS.get(id));
     }
