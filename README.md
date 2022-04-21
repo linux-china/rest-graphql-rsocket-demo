@@ -11,6 +11,17 @@ Demo for HTTP REST, GraphQL and RSocket
 GET http://localhost:8080/book/book-1
 ```
 
+* RSocket Request
+
+```http request
+### RSocket request
+RSOCKET findBook
+Host: ws://localhost:8080/rsocket
+Content-Type: application/json
+
+"book-1"
+```
+
 * GraphQL over HTTP
 
 ```http request
