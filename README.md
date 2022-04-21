@@ -1,32 +1,7 @@
 REST-GraphQL-RSocket combo demo
 ===============================
 
-One Controller to combine HTTP REST, GraphQL and RSocket.
-
-```java
-
-@Controller
-public class CombinedController {
-
-    @RequestMapping("/book/{id}")
-    @ResponseBody
-    @MessageMapping("findBook")
-    @QueryMapping("findBook")
-    public Mono<Book> findBook(@PathVariable("id") @Argument String id) {
-        return Mono.justOrEmpty(BOOKS.get(id));
-    }
-
-    @RestGraphqlRSocket(path = "/author/{id}", query = "findAuthor", route = "findAuthor")
-    public Mono<Author> findAuthor(@PathVariable("id") @Argument String id) {
-        return Mono.justOrEmpty(AUTHORS.get(id));
-    }
-
-    @SchemaMapping(typeName = "Book", field = "author")
-    public Mono<Author> authorForBook(Book book) {
-        return findAuthor(book.getAuthorId());
-    }
-}
-```
+Demo for HTTP REST, GraphQL and RSocket
 
 # Features
 
@@ -39,32 +14,37 @@ GET http://localhost:8080/book/book-1
 * GraphQL over HTTP
 
 ```http request
-POST http://localhost:8080/graphql
-Content-Type: application/json
+### GraphQL over HTTP
+GRAPHQL http://localhost:8080/graphql
+Content-Type: application/graphql
 
-< ./graphql-query.json
+query {
+    findBook(id: "book-1") { id name }
+}
 ```
 
 * RSocket over WebSocket
 
 ```http request
-RSOCKET findBook
-Host: ws://localhost:8080/rsocket
-Content-Type: application/json
+### GraphQL over WebSocket
+GRAPHQLWS localhost:8080/graphql
+Content-Type: application/graphql
 
-"book-1"
+query {
+    findBook(id: "book-1") { id name }
+}
 ```
 
 * GraphQL over RSocket
 
 ```http request
 ### GraphQL over RSocket
-RSOCKET graphql
+GRAPHQLRS graphql
 Host: ws://localhost:8080/rsocket
-Content-Type: application/json
+Content-Type: application/graphql
 
-{
-  "query": "{ findBook(id: \"book-1\") { id name } }"
+query {
+    findBook(id: "book-1") { id name }
 }
 ```
 
