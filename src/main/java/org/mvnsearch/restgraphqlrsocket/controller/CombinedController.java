@@ -2,20 +2,16 @@ package org.mvnsearch.restgraphqlrsocket.controller;
 
 import org.mvnsearch.restgraphqlrsocket.domain.model.Author;
 import org.mvnsearch.restgraphqlrsocket.domain.model.Book;
-import org.springframework.graphql.ExecutionGraphQlRequest;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.graphql.data.method.annotation.SchemaMapping;
-import org.springframework.graphql.support.DefaultExecutionGraphQlRequest;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 
-import java.util.Locale;
 import java.util.Map;
-import java.util.UUID;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -60,12 +56,4 @@ public class CombinedController {
             new Author("author-3", "firstname", "lastName")
     ).collect(Collectors.toMap(Author::getId, Function.identity()));
 
-
-    private ExecutionGraphQlRequest convertToRequestInput(Map<String, Object> request) {
-        String query = (String) request.get("query");
-        String operationName = (String) request.get("operationName");
-        @SuppressWarnings("unchecked")
-        Map<String, Object> variables = (Map<String, Object>) request.get("variables");
-        return new DefaultExecutionGraphQlRequest(query, operationName, variables, UUID.randomUUID().toString(), Locale.getDefault());
-    }
 }
