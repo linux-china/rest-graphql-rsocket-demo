@@ -15,7 +15,7 @@ Content-Type: application/json
 GRAPHQL http://localhost:8080/graphql
 Content-Type: application/graphql
 
-query {
+query findBook {
     findBook(id: "book-1") { id name }
 }
 
