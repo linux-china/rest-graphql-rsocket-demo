@@ -20,19 +20,18 @@ query findBook {
 }
 
 ### GraphQL over WebSocket
-GRAPHQLWS localhost:8080/graphql
+GRAPHQL ws://localhost:8080/graphql
 Content-Type: application/graphql
 
-query {
+query findBook{
     findBook(id: "book-1") { id name }
 }
 
 ### GraphQL over RSocket
-GRAPHQLRS graphql
-Host: ws://localhost:8080/rsocket
+GRAPHQL rsocketws://localhost:8080/rsocket/graphql
 Content-Type: application/graphql
 
-query {
+query findBook{
     findBook(id: "book-1") { id name }
 }
 
